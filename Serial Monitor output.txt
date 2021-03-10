@@ -1,0 +1,67 @@
+16:48:55.956 -> Starting Connect on WIO_TERMINAL, with W5x00 using Ethernet Library
+16:48:55.956 -> [SQL] =========================================
+16:48:55.956 -> [SQL] Default SPI pinout:
+16:48:55.956 -> [SQL] MOSI: 48
+16:48:55.956 -> [SQL] MISO: 47
+16:48:55.956 -> [SQL] SCK: 49
+16:48:55.956 -> [SQL] SS: 50
+16:48:55.956 -> [SQL] =========================================
+16:48:55.956 -> [SQL] Board : WIO_TERMINAL , setCsPin: 10
+16:48:56.513 -> 
+16:48:56.513 -> W5100 init, using SS_PIN_DEFAULT = 50, new ss_pin = 10, W5100Class::ss_pin = 50
+16:48:56.513 -> W5100::init: W5500, SSIZE =4096
+16:48:56.513 -> Using mac index = 13
+16:48:56.513 -> Connected! IP address: 192.168.101.83
+16:48:56.513 -> Connecting to SQL Server @ 5.150.142.221, Port = 3306
+16:48:56.513 -> User = seeed, PW = support01$$
+16:48:56.513 -> Connecting...
+16:48:56.513 -> [SQL] Connecting to Server: 5.150.142.221 , Port =  3306
+16:48:57.121 -> [SQL] Connect OK. Try reading packets
+16:48:57.450 -> [SQL] MySQL_Packet::wait_for_bytes: OK, Num bytes=  102
+16:48:57.450 -> [SQL] MySQL_Packet::read_packet: packet_len=  98
+16:48:57.450 -> [SQL] MySQL_Packet::read_packet: First time allocate buffer, size =  102
+16:48:57.450 -> [SQL] MySQL_Packet::read_packet: exit
+16:48:57.450 -> [SQL] Try parsing packets
+16:48:57.450 -> [SQL] Try send_authentication packets
+16:48:57.450 -> [SQL] MySQL_Packet::wait_for_bytes: OK, Num bytes=  11
+16:48:57.450 -> [SQL] MySQL_Packet::read_packet: packet_len=  7
+16:48:57.450 -> [SQL] MySQL_Packet::read_packet: exit
+16:48:57.450 -> [SQL] MySQL_Packet::get_packet_type: packet type=  0
+16:48:57.450 -> [SQL] MySQL_Packet::get_packet_type: packet type= MYSQL_OK_PACKET
+16:48:57.450 -> [SQL] Connected. Server Version = 5.5.5-10.1.48-MariaDB-0+deb9u1
+16:48:57.450 -> Query run
+16:48:57.450 -> ====================================================
+16:48:57.450 ->               Running UPDATE FW                     
+16:48:57.450 -> ====================================================
+16:48:57.450 -> queryVerFW=  UPDATE acap100_test_eth.gate SET VerFW = 'TestETH' WHERE IdGate = 1
+16:48:57.450 -> [SQL] MySQL_Query::execute: Reuse allocated buffer, conn->largest_buffer_size =  102  >  72
+16:48:57.450 -> [SQL] MySQL_Query::execute: query =  UPDATE acap100_test_eth.gate SET VerFW = 'TestETH' WHERE IdGate = 1
+16:48:57.450 -> [SQL] MySQL_Query::execute_query: query =  UPDATE acap100_test_eth.gate SET VerFW = 'TestETH' WHERE IdGate = 1
+16:48:57.496 -> [SQL] MySQL_Packet::wait_for_bytes: OK, Num bytes=  52
+16:48:57.496 -> [SQL] MySQL_Packet::read_packet: packet_len=  48
+16:48:57.496 -> [SQL] MySQL_Packet::read_packet: exit
+16:48:57.496 -> [SQL] MySQL_Packet::get_packet_type: packet type=  0
+16:48:57.496 -> [SQL] MySQL_Packet::get_packet_type: packet type= MYSQL_OK_PACKET
+16:48:57.496 -> Quering UPDATE FW OK
+16:48:57.496 -> Closing connection...
+16:48:57.496 -> [SQL] Disconnected
+16:49:00.488 -> 
+16:49:00.488 -> Sleeping...
+16:49:00.488 -> ================================================
+16:49:10.492 -> Connecting...
+16:49:10.492 -> [SQL] Connecting to Server: 5.150.142.221 , Port =  3306
+16:49:10.492 -> [SQL] Can't connect. Retry # 1
+16:49:10.492 -> Query run
+16:49:10.492 -> ====================================================
+16:49:10.492 ->               Running UPDATE FW                     
+16:49:10.492 -> ====================================================
+16:49:10.492 -> queryVerFW=  UPDATE acap100_test_eth.gate SET VerFW = 'TestETH' WHERE IdGate = 1
+16:49:10.539 -> [SQL] ERROR: Class requires connected server.
+16:49:10.539 -> ====================================================
+16:49:10.539 ->                Query UPDATE FW error 
+16:49:10.539 -> ====================================================
+16:49:10.539 -> Closing connection...
+16:49:13.530 -> 
+16:49:13.530 -> Sleeping...
+16:49:13.530 -> ================================================
+16:49:23.525 -> Connecting...
