@@ -71,7 +71,7 @@
 #if defined(ETHERNET_USE_SAMD)
 // For SAMD
 // Default pin 10 to SS/CS
-#define USE_THIS_SS_PIN       PIN_SPI_SS
+#define USE_THIS_SS_PIN       10
 
 #if ( defined(ARDUINO_SAMD_ZERO) && !defined(SEEED_XIAO_M0) )
 #define BOARD_TYPE      "SAMD Zero"
@@ -215,7 +215,7 @@
 
 #elif ( defined(CORE_TEENSY) )
 // Default pin 10 to SS/CS
-#define USE_THIS_SS_PIN       10
+#define USE_THIS_SS_PIN       PIN_SPI_SS
 
 #if defined(__IMXRT1062__)
 // For Teensy 4.1/4.0
@@ -290,7 +290,7 @@
 #else
 // For Mega
 // Default pin 10 to SS/CS
-#define USE_THIS_SS_PIN       10
+#define USE_THIS_SS_PIN       PIN_SPI_SS
 
 #define BOARD_TYPE      "AVR Mega"
 #endif
@@ -313,24 +313,14 @@
 // Check @ defined(SEEED_XIAO_M0)
 //#define USE_THIS_SS_PIN   22  //21  //5 //4 //2 //15
 
-// Only one if the following to be true
-#if     USE_W5500
-#define USE_ETHERNET          true
-#define USE_ETHERNET2         false
-#define USE_ETHERNET3         false
-#define USE_ETHERNET_LARGE    false
-#define USE_ETHERNET_ESP8266  false
-#define USE_ETHERNET_ENC      false
-#define USE_CUSTOM_ETHERNET   false
-#elif   USE_ENC28J60          
-#define USE_ETHERNET          false
-#define USE_ETHERNET2         false
-#define USE_ETHERNET3         false
-#define USE_ETHERNET_LARGE    false
-#define USE_ETHERNET_ESP8266  false
-#define USE_ETHERNET_ENC      true
-#define USE_CUSTOM_ETHERNET   false
-#endif
+// Only one of the following to be true.
+#define USE_ETHERNET              true  //true
+#define USE_ETHERNET_LARGE        false
+#define USE_ETHERNET2             false //true
+#define USE_ETHERNET3             false //true
+#define USE_ETHERNET_ESP8266      false //true
+#define USE_ETHERNET_ENC          false
+#define USE_ETHERNET_LAN8742A     false //true
 
 // KH, from v1.0.1
 #define USE_UIP_ETHERNET          false

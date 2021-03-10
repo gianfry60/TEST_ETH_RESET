@@ -24,7 +24,6 @@
 
 #ifndef MYSQL_GENERIC_WIFI_H
 #define MYSQL_GENERIC_WIFI_H
-#define USING_WIFI_CUSTOM
 
 // ESP8266 and ESP32 built-in WiFi have highest priority and will override all other settings
 #if (ESP8266)
@@ -66,8 +65,8 @@
   
 #elif (USING_WIFI_CUSTOM)
   #warning Using Custom WiFi Library. To modify according to Library.
-  #include <WiFi.h>
-  #include <rpcWiFiClient.h>
+  #include "WiFi_XYZ.h"
+  #include "WiFi_XYZ_Client.h"
   WiFiClient client;
   
 #else

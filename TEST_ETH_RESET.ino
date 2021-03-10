@@ -1,6 +1,10 @@
 #include <Arduino.h>
-#include <MySQL_Generic_Ethernet.h>
 #include "defines.h"
+
+#include <MySQL_Generic_Ethernet.h>
+
+// Select the static Local IP address according to your local network
+IPAddress ip(192, 168, 101, 83);
 
 IPAddress server_ip(5, 150, 142, 221);
 int server_port = 3306;
@@ -10,6 +14,11 @@ char default_database[] = "acap100_test_eth"; //"test_DB";
 char default_table[] = "gate";                //"test_Table";
 
 const char QUERY_TEST[] = "UPDATE acap100_test_eth.gate SET VerFW = 'TestETH' WHERE IdGate = 1";
+
+IPAddress myIP(192, 168, 101, 83);
+IPAddress myMASK(255, 255, 255, 0);
+IPAddress myDNS(8, 8, 8, 8);
+IPAddress myGW(192, 168, 101, 250);
 
 MySQL_Connection conn((Client *)&client);
 
@@ -43,33 +52,35 @@ void setup()
 {
     Serial.begin(115200);
     while (!Serial)
-    {
-    }; // wait for serial port to connect
+        ;
+
     pinMode(ResetETH, OUTPUT);
     digitalWrite(ResetETH, LOW);
     delay(100);
     digitalWrite(ResetETH, HIGH);
     delay(500);
 
+    Serial.println("\nStarting Connect on " + String(BOARD_NAME) + ", with " + String(SHIELD_TYPE));
+
+    MYSQL_LOGERROR(F("========================================="));
+    MYSQL_LOGERROR(F("Default SPI pinout:"));
+    MYSQL_LOGERROR1(F("MOSI:"), MOSI);
+    MYSQL_LOGERROR1(F("MISO:"), MISO);
+    MYSQL_LOGERROR1(F("SCK:"), SCK);
+    MYSQL_LOGERROR1(F("SS:"), SS);
+    MYSQL_LOGERROR(F("========================================="));
+
     MYSQL_LOGERROR3(F("Board :"), BOARD_NAME, F(", setCsPin:"), USE_THIS_SS_PIN);
 
+    Ethernet.init(PIN_SPI_SS);
 
-    Ethernet.init(USE_THIS_SS_PIN);
-
-    IPAddress myIP;
-    IPAddress myMASK;
-    IPAddress myDNS;
-    IPAddress myGW;
-
-    // myIP.fromString(String("192.168.101.83"));
-    myIP.fromString(String("192.168.0.83"));
-
-    myMASK.fromString(String("255.255.255.0"));
-    myDNS.fromString(String("8.8.8.8"));
-    // myGW.fromString(String("192.168.101.250"));
-    myGW.fromString(String("192.168.0.1"));
-
+    // start the ethernet connection and the server:
+    uint16_t index = millis() % NUMBER_OF_MAC;
+    // Use Static IP
     Ethernet.begin(mac[0], myIP, myDNS, myGW, myMASK);
+
+    Serial.print("Using mac index = ");
+    Serial.println(index);
 
     Serial.print("Connected! IP address: ");
     Serial.println(Ethernet.localIP());
@@ -77,31 +88,42 @@ void setup()
     Serial.print("Connecting to SQL Server @ ");
     Serial.print(server_ip);
     Serial.println(String(", Port = ") + server_port);
-    Serial.println(String("User = ") + user + String(", PW = ") + password + String(", DB = ") + default_database);
+    Serial.println(String("User = ") + user + String(", PW = ") + password);
 }
 
 void loop()
 {
+    Serial.println("Connecting...");
+
+    //if (conn.connect(server_ip, server_port, user, password))
     if (conn.connectNonBlocking(server_ip, server_port, user, password) != RESULT_FAIL)
     {
+        Serial.println("Query run");
         UpdateFW();
-        conn.close();
+        Serial.println("Closing connection...");
+        conn.close(); // close the connection
         do
         {
             client.flush();
         } while (client.available());
         client.stop();
-        EthernetClient client;
         delay(500);
         digitalWrite(ResetETH, LOW);
-        Serial.println("Reset Network Card in loop");
         delay(500);
         digitalWrite(ResetETH, HIGH);
-        delay(3000);
+        delay(1000);
+        Ethernet.init(USE_THIS_SS_PIN);
+        delay(1000);
+        Ethernet.begin(mac[0], myIP, myDNS, myGW, myMASK);
+        EthernetClient client;
     }
     else
     {
-        Serial.println("DB Connect failed");
-        delay(3000);
+        Serial.println("\nConnect failed. Trying again on next iteration.");
     }
+
+    Serial.println("\nSleeping...");
+    Serial.println("================================================");
+
+    delay(10000);
 }
